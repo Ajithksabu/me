@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ajith K Sabu - Java Spring Boot Developer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+    tailwind.config = {
+        theme: {
+            extend: {
+                colors: {
+                    'primary': '#1e40af',
+                    'secondary': '#3b82f6',
+                    'accent': '#06b6d4',
+                    'dark': '#0f172a',
+                    'light': '#f8fafc',
+                },
+                container: {
+                    center: true,
+                    padding: {
+                        DEFAULT: '1rem',
+                        sm: '2rem',
+                        lg: '4rem',
+                        xl: '5rem',
+                        '2xl': '6rem',
+                    },
+                },
+                animation: {
+                    'fade-in': 'fadeIn 0.6s ease-in-out',
+                    'slide-up': 'slideUp 0.8s ease-out',
+                    'float': 'float 3s ease-in-out infinite',
+                },
+                keyframes: {
+                    fadeIn: {
+                        '0%': { opacity: '0' },
+                        '100%': { opacity: '1' },
+                    },
+                    slideUp: {
+                        '0%': { transform: 'translateY(30px)', opacity: '0' },
+                        '100%': { transform: 'translateY(0)', opacity: '1' },
+                    },
+                    float: {
+                        '0%, 100%': { transform: 'translateY(0px)' },
+                        '50%': { transform: 'translateY(-10px)' },
+                    },
+                }
+            }
+        }
+    }
+    </script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .code-font { font-family: 'JetBrains Mono', monospace; }
+        .gradient-bg { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+        .glass-effect { backdrop-filter: blur(10px); background: rgba(255, 255, 255, 0.1); }
+        .skill-bar { transition: width 2s ease-in-out; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+    <header-component></header-component>
+    
+    <main>
+        <hero-section></hero-section>
+        <about-section></about-section>
+        <skills-section></skills-section>
+        <experience-section></experience-section>
+        <projects-section></projects-section>
+        <education-section></education-section>
+        <certifications-section></certifications-section>
+        <contact-section></contact-section>
+    </main>
+
+    <footer-component></footer-component>
+
+    <script>
+        // Header Component
+        class Header extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <header class="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur-md shadow-sm animate__animated animate__fadeInDown">
+                        <nav class="container mx-auto px-4 py-4">
+                            <div class="flex items-center justify-between">
+                                <div class="text-2xl font-bold text-primary">
+                                    <span class="code-font">AKS</span>
+                                </div>
+                                
+                                <!-- Desktop Menu -->
+                                <div class="hidden md:flex space-x-8">
+                                    <a href="#home" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Home</a>
+                                    <a href="#about" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">About</a>
+                                    <a href="#skills" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Skills</a>
+                                    <a href="#experience" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Experience</a>
+                                    <a href="#projects" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Projects</a>
+                                    <a href="#contact" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Contact</a>
+                                </div>
+
+                                <!-- Mobile Menu Button -->
+                                <button id="mobile-menu-button" class="md:hidden text-gray-700 hover:text-primary">
+                                    <i class="fas fa-bars text-xl"></i>
+                                </button>
+                            </div>
+
+                            <!-- Mobile Menu -->
+                            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4">
+                                <div class="flex flex-col space-y-4">
+                                    <a href="#home" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Home</a>
+                                    <a href="#about" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">About</a>
+                                    <a href="#skills" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Skills</a>
+                                    <a href="#experience" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Experience</a>
+                                    <a href="#projects" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Projects</a>
+                                    <a href="#contact" class="nav-link text-gray-700 hover:text-primary transition-colors duration-300">Contact</a>
+                                </div>
+                            </div>
+                        </nav>
+                    </header>
+                `;
+                this.initializeMenu();
+                this.initializeSmoothScroll();
+            }
+
+            initializeMenu() {
+                const mobileMenuButton = this.querySelector('#mobile-menu-button');
+                const mobileMenu = this.querySelector('#mobile-menu');
+                if (mobileMenuButton && mobileMenu) {
+                    mobileMenuButton.addEventListener('click', () => {
+                        mobileMenu.classList.toggle('hidden');
+                    });
+                }
+            }
+
+            initializeSmoothScroll() {
+                const navLinks = this.querySelectorAll('.nav-link');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetId = link.getAttribute('href').substring(1);
+                        const targetElement = document.getElementById(targetId);
+                        if (targetElement) {
+                            targetElement.scrollIntoView({ behavior: 'smooth' });
+                            const mobileMenu = this.querySelector('#mobile-menu');
+                            if (mobileMenu) {
+                                mobileMenu.classList.add('hidden');
+                            }
+                        }
+                    });
+                });
+            }
+        }
+
+        // Hero Section Component
+        class HeroSection extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <section id="home" class="min-h-screen flex items-center gradient-bg relative overflow-hidden">
+                        <div class="absolute inset-0 bg-black/20"></div>
+                        <div class="container mx-auto px-4 relative z-10">
+                            <div class="flex flex-col lg:flex-row items-center justify-between">
+                                <div class="lg:w-1/2 text-white mb-8 lg:mb-0 animate__animated animate__fadeInLeft">
+                                    <h1 class="text-4xl md:text-6xl font-bold mb-4">
+                                        Hi, I'm <span class="text-yellow-300">Ajith K Sabu</span>
+                                    </h1>
+                                    <h2 class="text-xl md:text-2xl mb-6 text-blue-200">Java Spring Boot Developer</h2>
+                                    <p class="text-lg mb-8 text-gray-200 leading-relaxed">
+                                        Results-driven developer with 4+ years of experience building robust backend systems and scalable microservices. Passionate about creating enterprise-grade solutions.
+                                    </p>
+                                    <div class="flex flex-col sm:flex-row gap-4">
+                                        <a href="#projects" class="bg-yellow-400 text-gray-900 px-8 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors duration-300 text-center">
+                                            View My Work
+                                        </a>
+                                        <a href="https://supabasekong-shipstation.badalhibadal.com/storage/v1/object/public/shipstation-websites/temporary-assets/1752833223324-ajith_springboot_resume_1.pdf" target="_blank" class="border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300 text-center">
+                                            <i class="fas fa-download mr-2"></i>Download Resume
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="lg:w-1/2 flex justify-center animate__animated animate__fadeInRight">
+                                    <div class="relative">
+                                        <div class="w-80 h-80 rounded-full overflow-hidden border-8 border-white/20 shadow-2xl animate-float">
+                                            <img src="https://supabasekong-shipstation.badalhibadal.com//storage/v1/object/public/shipstation-websites/ai-headshots/developer/male/developer-male-6.jpeg" alt="Ajith K Sabu - Java Spring Boot Developer" class="w-full h-full object-cover">
+                                        </div>
+                                        <div class="absolute -top-4 -right-4 w-20 h-20 bg-yellow-400 rounded-full flex items-center justify-center animate-pulse">
+                                            <i class="fab fa-java text-2xl text-gray-900"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 text-white animate-bounce">
+                            <i class="fas fa-chevron-down text-2xl"></i>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+
+        // About Section Component
+        class AboutSection extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <section id="about" class="py-20 bg-white">
+                        <div class="container mx-auto px-4">
+                            <div class="text-center mb-16 animate__animated animate__fadeInUp">
+                                <h2 class="text-4xl font-bold text-gray-900 mb-4">About Me</h2>
+                                <div class="w-24 h-1 bg-primary mx-auto"></div>
+                            </div>
+                            
+                            <div class="grid lg:grid-cols-2 gap-12 items-center">
+                                <div class="animate__animated animate__fadeInLeft">
+                                    <h3 class="text-2xl font-semibold text-gray-900 mb-6">Professional Summary</h3>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        I'm a results-driven Java Spring Boot Developer with over 4 years of experience in building robust backend systems and scalable microservices. My expertise lies in creating enterprise-grade software solutions, with a proven track record of delivering high-performance applications for clients like First Abu Dhabi Bank.
+                                    </p>
+                                    <p class="text-gray-600 mb-6 leading-relaxed">
+                                        I'm passionate about backend architecture, DevOps practices, and cross-team collaboration. I believe in writing clean, testable code and following industry best practices to deliver solutions that not only meet requirements but exceed expectations.
+                                    </p>
+                                    
+                                    <div class="grid grid-cols-2 gap-6 mb-8">
+                                        <div>
+                                            <h4 class="font-semibold text-gray-900 mb-2">Location</h4>
+                                            <p class="text-gray-600">Cherthala, Kerala, India</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-900 mb-2">Experience</h4>
+                                            <p class="text-gray-600">4+ Years</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-900 mb-2">Languages</h4>
+                                            <p class="text-gray-600">English, Malayalam</p>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-semibold text-gray-900 mb-2">Specialization</h4>
+                                            <p class="text-gray-600">Backend Development</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="animate__animated animate__fadeInRight">
+                                    <div class="bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white">
+                                        <h3 class="text-2xl font-semibold mb-6">Key Highlights</h3>
+                                        <div class="space-y-4">
+                                            <div class="flex items-start">
+                                                <i class="fas fa-check-circle text-yellow-400 mt-1 mr-3"></i>
+                                                <p>Deployed to First Abu Dhabi Bank, Dubai for 1.5+ years</p>
+                                            </div>
+                                            <div class="flex items-start">
+                                                <i class="fas fa-check-circle text-yellow-400 mt-1 mr-3"></i>
+                                                <p>Expert in Spring Boot, Microservices, and RESTful APIs</p>
+                                            </div>
+                                            <div class="flex items-start">
+                                                <i class="fas fa-check-circle text-yellow-400 mt-1 mr-3"></i>
+                                                <p>Strong background in DevOps and cloud technologies</p>
+                                            </div>
+                                            <div class="flex items-start">
+                                                <i class="fas fa-check-circle text-yellow-400 mt-1 mr-3"></i>
+                                                <p>Mentored junior developers and led code reviews</p>
+                                            </div>
+                                            <div class="flex items-start">
+                                                <i class="fas fa-check-circle text-yellow-400 mt-1 mr-3"></i>
+                                                <p>M.Sc. Computer Science from University of Kerala</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+
+        // Skills Section Component
+        class SkillsSection extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <section id="skills" class="py-20 bg-gray-50">
+                        <div class="container mx-auto px-4">
+                            <div class="text-center mb-16 animate__animated animate__fadeInUp">
+                                <h2 class="text-4xl font-bold text-gray-900 mb-4">Technical Skills</h2>
+                                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                                <p class="text-gray-600 max-w-2xl mx-auto">
+                                    Here are the technologies and tools I work with to build robust, scalable applications
+                                </p>
+                            </div>
+
+                            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+                                <div class="skill-category bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate__animated animate__fadeInUp">
+                                    <div class="text-center mb-4">
+                                        <i class="fab fa-java text-4xl text-orange-600 mb-3"></i>
+                                        <h3 class="text-xl font-semibold text-gray-900">Backend</h3>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">Java</span>
+                                                <span class="text-sm text-gray-500">95%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-orange-600 h-2 rounded-full" style="width: 0%" data-width="95%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">Spring Boot</span>
+                                                <span class="text-sm text-gray-500">90%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-green-600 h-2 rounded-full" style="width: 0%" data-width="90%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">Hibernate/JPA</span>
+                                                <span class="text-sm text-gray-500">85%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-blue-600 h-2 rounded-full" style="width: 0%" data-width="85%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="skill-category bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate__animated animate__fadeInUp">
+                                    <div class="text-center mb-4">
+                                        <i class="fas fa-database text-4xl text-blue-600 mb-3"></i>
+                                        <h3 class="text-xl font-semibold text-gray-900">Databases</h3>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">MySQL</span>
+                                                <span class="text-sm text-gray-500">90%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-blue-600 h-2 rounded-full" style="width: 0%" data-width="90%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">PostgreSQL</span>
+                                                <span class="text-sm text-gray-500">85%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-indigo-600 h-2 rounded-full" style="width: 0%" data-width="85%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">MongoDB</span>
+                                                <span class="text-sm text-gray-500">75%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-green-600 h-2 rounded-full" style="width: 0%" data-width="75%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="skill-category bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate__animated animate__fadeInUp">
+                                    <div class="text-center mb-4">
+                                        <i class="fab fa-docker text-4xl text-blue-500 mb-3"></i>
+                                        <h3 class="text-xl font-semibold text-gray-900">DevOps</h3>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">Docker</span>
+                                                <span class="text-sm text-gray-500">80%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-blue-500 h-2 rounded-full" style="width: 0%" data-width="80%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">Azure</span>
+                                                <span class="text-sm text-gray-500">75%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-blue-400 h-2 rounded-full" style="width: 0%" data-width="75%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">Git/GitHub</span>
+                                                <span class="text-sm text-gray-500">90%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-gray-800 h-2 rounded-full" style="width: 0%" data-width="90%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="skill-category bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate__animated animate__fadeInUp">
+                                    <div class="text-center mb-4">
+                                        <i class="fab fa-react text-4xl text-cyan-500 mb-3"></i>
+                                        <h3 class="text-xl font-semibold text-gray-900">Frontend</h3>
+                                    </div>
+                                    <div class="space-y-3">
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">React</span>
+                                                <span class="text-sm text-gray-500">70%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-cyan-500 h-2 rounded-full" style="width: 0%" data-width="70%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">JavaScript</span>
+                                                <span class="text-sm text-gray-500">75%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-yellow-500 h-2 rounded-full" style="width: 0%" data-width="75%"></div>
+                                            </div>
+                                        </div>
+                                        <div class="skill-item">
+                                            <div class="flex justify-between mb-1">
+                                                <span class="text-sm font-medium text-gray-700">HTML/CSS</span>
+                                                <span class="text-sm text-gray-500">80%</span>
+                                            </div>
+                                            <div class="w-full bg-gray-200 rounded-full h-2">
+                                                <div class="skill-bar bg-orange-500 h-2 rounded-full" style="width: 0%" data-width="80%"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+                this.initializeSkillBars();
+            }
+
+            initializeSkillBars() {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            const skillBars = entry.target.querySelectorAll('.skill-bar');
+                            skillBars.forEach(bar => {
+                                const width = bar.getAttribute('data-width');
+                                setTimeout(() => {
+                                    bar.style.width = width;
+                                }, 200);
+                            });
+                        }
+                    });
+                });
+
+                observer.observe(this);
+            }
+        }
+
+        // Experience Section Component
+        class ExperienceSection extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <section id="experience" class="py-20 bg-white">
+                        <div class="container mx-auto px-4">
+                            <div class="text-center mb-16 animate__animated animate__fadeInUp">
+                                <h2 class="text-4xl font-bold text-gray-900 mb-4">Professional Experience</h2>
+                                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                                <p class="text-gray-600 max-w-2xl mx-auto">
+                                    My journey in software development, building enterprise solutions and leading teams
+                                </p>
+                            </div>
+
+                            <div class="max-w-4xl mx-auto">
+                                <div class="relative">
+                                    <!-- Timeline line -->
+                                    <div class="absolute left-8 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-primary"></div>
+                                    
+                                    <!-- Experience Item 1 -->
+                                    <div class="relative flex items-center mb-12 animate__animated animate__fadeInLeft">
+                                        <div class="absolute left-6 md:left-1/2 transform md:-translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-white shadow-lg"></div>
+                                        <div class="ml-16 md:ml-0 md:w-1/2 md:pr-8">
+                                            <div class="bg-gray-50 p-6 rounded-xl shadow-lg">
+                                                <div class="flex items-center mb-3">
+                                                    <i class="fas fa-building text-primary mr-3"></i>
+                                                    <h3 class="text-xl font-semibold text-gray-900">Software Engineer</h3>
+                                                </div>
+                                                <p class="text-primary font-medium mb-2">Streben Technik, Alappuzha</p>
+                                                <p class="text-gray-600 text-sm mb-4">Jan 2021 – Present</p>
+                                                <div class="bg-blue-50 p-4 rounded-lg mb-4">
+                                                    <p class="text-blue-800 font-medium text-sm">
+                                                        <i class="fas fa-plane mr-2"></i>
+                                                        Deployed to First Abu Dhabi Bank, Dubai (Jan 2023 – Aug 2024)
+                                                    </p>
+                                                </div>
+                                                <ul class="text-gray-600 space-y-2">
+                                                    <li class="flex items-start">
+                                                        <i class="fas fa-check text-green-500 mr-2 mt-1 text-sm"></i>
+                                                        <span class="text-sm">Designed and developed secure, high-performance microservices using Spring Boot and Quarkus for financial applications</span>
+                                                    </li>
+                                                    <li class="flex items-start">
+                                                        <i class="fas fa-check text-green-500 mr-2 mt-1 text-sm"></i>
+                                                        <span class="text-sm">Built RESTful APIs to handle business-critical functionalities, such as prepaid card transactions</span>
+                                                    </li>
+                                                    <li class="flex items-start">
+                                                        <i class="fas fa-check text-green-500 mr-2 mt-1 text-sm"></i>
+                                                        <span class="text-sm">Contributed to the automation of deployment pipelines using Azure and Docker</span>
+                                                    </li>
+                                                    <li class="flex items-start">
+                                                        <i class="fas fa-check text-green-500 mr-2 mt-1 text-sm"></i>
+                                                        <span class="text-sm">Led code review sessions and mentored junior developers</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Key Achievements -->
+                                <div class="mt-16 bg-gradient-to-r from-primary to-secondary p-8 rounded-2xl text-white animate__animated animate__fadeInUp">
+                                    <h3 class="text-2xl font-semibold mb-6 text-center">Key Achievements</h3>
+                                    <div class="grid md:grid-cols-3 gap-6">
+                                        <div class="text-center">
+                                            <div class="text-3xl font-bold mb-2">4+</div>
+                                            <p class="text-blue-200">Years Experience</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-3xl font-bold mb-2">15+</div>
+                                            <p class="text-blue-200">Projects Completed</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="text-3xl font-bold mb-2">1.5+</div>
+                                            <p class="text-blue-200">Years in Dubai</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+
+        // Projects Section Component
+        class ProjectsSection extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <section id="projects" class="py-20 bg-gray-50">
+                        <div class="container mx-auto px-4">
+                            <div class="text-center mb-16 animate__animated animate__fadeInUp">
+                                <h2 class="text-4xl font-bold text-gray-900 mb-4">Featured Projects</h2>
+                                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                                <p class="text-gray-600 max-w-2xl mx-auto">
+                                    Here are some of the key projects I've worked on, showcasing my expertise in backend development and system architecture
+                                </p>
+                            </div>
+
+                            <div class="grid lg:grid-cols-3 gap-8">
+                                <!-- Project 1: Banking Microservices -->
+                                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 animate__animated animate__fadeInUp">
+                                    <div class="relative overflow-hidden">
+                                        <img src="https://www.arshakir.com/uploads/projects/set-of-5-clean-and-modern-finance-dashboards-designed-in-figma-2.jpeg" alt="Banking Microservices Platform" class="w-full h-48 object-cover hover:scale-105 transition-transform duration-300">
+                                        <div class="absolute top-4 right-4 bg-green-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                            Enterprise
+                                        </div>
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Banking Microservices Platform</h3>
+                                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                            Developed RESTful APIs for First Abu Dhabi Bank to manage prepaid card operations including issuance, top-up, and transaction history. Implemented secure coding practices and ensured API compliance with industry standards.
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-medium">Java</span>
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Spring Boot</span>
+                                            <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded text-xs font-medium">Microservices</span>
+                                            <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded text-xs font-medium">REST API</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm text-gray-500">
+                                                <i class="fas fa-building mr-1"></i>
+                                                First Abu Dhabi Bank
+                                            </span>
+                                            <div class="flex space-x-2">
+                                                <button class="text-primary hover:text-secondary transition-colors">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </button>
+                                                <button class="text-primary hover:text-secondary transition-colors">
+                                                    <i class="fab fa-github"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Project 2: Customs Documentation System -->
+                                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 animate__animated animate__fadeInUp">
+                                    <div class="relative overflow-hidden">
+                                        <img src="https://www.slideteam.net/media/catalog/product/cache/1280x720/d/o/document_management_system_dashboard_for_insights_slide01.jpg" alt="Danube Customs Documentation System" class="w-full h-48 object-cover hover:scale-105 transition-transform duration-300">
+                                        <div class="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                            B2B
+                                        </div>
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Danube – Customs Documentation System</h3>
+                                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                            Built backend modules for automating customs document workflows including RBOE, IB, and Gate Passes. Integrated with internal ERPs to streamline data flow and ensure compliance with customs regulations.
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-medium">Java</span>
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Spring Boot</span>
+                                            <span class="bg-indigo-100 text-indigo-800 px-2 py-1 rounded text-xs font-medium">ERP Integration</span>
+                                            <span class="bg-yellow-100 text-yellow-800 px-2 py-1 rounded text-xs font-medium">Workflow</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm text-gray-500">
+                                                <i class="fas fa-shipping-fast mr-1"></i>
+                                                Danube
+                                            </span>
+                                            <div class="flex space-x-2">
+                                                <button class="text-primary hover:text-secondary transition-colors">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </button>
+                                                <button class="text-primary hover:text-secondary transition-colors">
+                                                    <i class="fab fa-github"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Project 3: Radio Campaign Portal -->
+                                <div class="project-card bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300 animate__animated animate__fadeInUp">
+                                    <div class="relative overflow-hidden">
+                                        <img src="https://i.pinimg.com/originals/f3/fe/14/f3fe14842ef113fecb3ca2d785931808.png" alt="Mediaarms Radio Campaign Portal" class="w-full h-48 object-cover hover:scale-105 transition-transform duration-300">
+                                        <div class="absolute top-4 right-4 bg-purple-500 text-white px-3 py-1 rounded-full text-sm font-medium">
+                                            Media
+                                        </div>
+                                    </div>
+                                    <div class="p-6">
+                                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Mediaarms – Radio Campaign Portal</h3>
+                                        <p class="text-gray-600 mb-4 text-sm leading-relaxed">
+                                            Developed backend services to manage radio channel bookings and campaign scheduling. Created a comprehensive system for media planning, booking management, and campaign tracking for radio advertising.
+                                        </p>
+                                        <div class="flex flex-wrap gap-2 mb-4">
+                                            <span class="bg-orange-100 text-orange-800 px-2 py-1 rounded text-xs font-medium">Java</span>
+                                            <span class="bg-green-100 text-green-800 px-2 py-1 rounded text-xs font-medium">Spring Boot</span>
+                                            <span class="bg-pink-100 text-pink-800 px-2 py-1 rounded text-xs font-medium">Scheduling</span>
+                                            <span class="bg-cyan-100 text-cyan-800 px-2 py-1 rounded text-xs font-medium">Campaign Mgmt</span>
+                                        </div>
+                                        <div class="flex items-center justify-between">
+                                            <span class="text-sm text-gray-500">
+                                                <i class="fas fa-radio mr-1"></i>
+                                                Streben Technik
+                                            </span>
+                                            <div class="flex space-x-2">
+                                                <button class="text-primary hover:text-secondary transition-colors">
+                                                    <i class="fas fa-external-link-alt"></i>
+                                                </button>
+                                                <button class="text-primary hover:text-secondary transition-colors">
+                                                    <i class="fab fa-github"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Project Stats -->
+                            <div class="mt-16 bg-white p-8 rounded-2xl shadow-lg animate__animated animate__fadeInUp">
+                                <h3 class="text-2xl font-semibold text-gray-900 mb-8 text-center">Project Impact</h3>
+                                <div class="grid md:grid-cols-4 gap-6 text-center">
+                                    <div>
+                                        <div class="text-3xl font-bold text-primary mb-2">3</div>
+                                        <p class="text-gray-600">Major Projects</p>
+                                    </div>
+                                    <div>
+                                        <div class="text-3xl font-bold text-primary mb-2">2</div>
+                                        <p class="text-gray-600">International Clients</p>
+                                    </div>
+                                    <div>
+                                        <div class="text-3xl font-bold text-primary mb-2">100%</div>
+                                        <p class="text-gray-600">On-Time Delivery</p>
+                                    </div>
+                                    <div>
+                                        <div class="text-3xl font-bold text-primary mb-2">15+</div>
+                                        <p class="text-gray-600">APIs Developed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+
+        // Education Section Component
+        class EducationSection extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <section id="education" class="py-20 bg-white">
+                        <div class="container mx-auto px-4">
+                            <div class="text-center mb-16 animate__animated animate__fadeInUp">
+                                <h2 class="text-4xl font-bold text-gray-900 mb-4">Education</h2>
+                                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                                <p class="text-gray-600 max-w-2xl mx-auto">
+                                    My academic background in Computer Science that laid the foundation for my career
+                                </p>
+                            </div>
+
+                            <div class="max-w-4xl mx-auto">
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <!-- Master's Degree -->
+                                    <div class="education-card bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white shadow-xl animate__animated animate__fadeInLeft">
+                                        <div class="flex items-center mb-6">
+                                            <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mr-4">
+                                                <i class="fas fa-graduation-cap text-2xl"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-xl font-semibold">Master's Degree</h3>
+                                                <p class="text-blue-200">M.Sc. Computer Science</p>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-3">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-university mr-3 text-yellow-300"></i>
+                                                <span>University of Kerala</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-calendar mr-3 text-yellow-300"></i>
+                                                <span>2018 – 2020</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-map-marker-alt mr-3 text-yellow-300"></i>
+                                                <span>Kerala, India</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-6 p-4 bg-white/10 rounded-lg">
+                                            <p class="text-sm">
+                                                Advanced studies in computer science with focus on software engineering, algorithms, and system design.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Bachelor's Degree -->
+                                    <div class="education-card bg-white border-2 border-gray-200 p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-shadow duration-300 animate__animated animate__fadeInRight">
+                                        <div class="flex items-center mb-6">
+                                            <div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mr-4">
+                                                <i class="fas fa-graduation-cap text-2xl text-primary"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-xl font-semibold text-gray-900">Bachelor's Degree</h3>
+                                                <p class="text-gray-600">B.Sc. Computer Science</p>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-3 text-gray-600">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-university mr-3 text-primary"></i>
+                                                <span>University of Kerala</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-calendar mr-3 text-primary"></i>
+                                                <span>2015 – 2018</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-map-marker-alt mr-3 text-primary"></i>
+                                                <span>Kerala, India</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                                            <p class="text-sm text-gray-600">
+                                                Comprehensive foundation in computer science fundamentals, programming, and mathematics.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Academic Highlights -->
+                                <div class="mt-12 bg-gray-50 p-8 rounded-2xl animate__animated animate__fadeInUp">
+                                    <h3 class="text-2xl font-semibold text-gray-900 mb-6 text-center">Academic Highlights</h3>
+                                    <div class="grid md:grid-cols-3 gap-6">
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fas fa-trophy text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="font-semibold text-gray-900 mb-2">Strong Foundation</h4>
+                                            <p class="text-gray-600 text-sm">Solid academic background in computer science principles</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fas fa-code text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="font-semibold text-gray-900 mb-2">Programming Skills</h4>
+                                            <p class="text-gray-600 text-sm">Developed strong programming and problem-solving abilities</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fas fa-project-diagram text-white text-xl"></i>
+                                            </div>
+                                            <h4 class="font-semibold text-gray-900 mb-2">System Design</h4>
+                                            <p class="text-gray-600 text-sm">Understanding of software architecture and system design</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+
+        // Certifications Section Component
+        class CertificationsSection extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <section id="certifications" class="py-20 bg-gray-50">
+                        <div class="container mx-auto px-4">
+                            <div class="text-center mb-16 animate__animated animate__fadeInUp">
+                                <h2 class="text-4xl font-bold text-gray-900 mb-4">Certifications</h2>
+                                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                                <p class="text-gray-600 max-w-2xl mx-auto">
+                                    Professional certifications that validate my expertise and commitment to continuous learning
+                                </p>
+                            </div>
+
+                            <div class="max-w-4xl mx-auto">
+                                <div class="grid md:grid-cols-2 gap-8">
+                                    <!-- Mendix Certification -->
+                                    <div class="certification-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate__animated animate__fadeInLeft">
+                                        <div class="flex items-center mb-6">
+                                            <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mr-4">
+                                                <i class="fas fa-certificate text-2xl text-blue-600"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-xl font-semibold text-gray-900">Mendix Rapid Developer</h3>
+                                                <p class="text-gray-600">Low-Code Development Platform</p>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-3 text-gray-600 mb-6">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-building mr-3 text-blue-600"></i>
+                                                <span>Mendix</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-calendar mr-3 text-blue-600"></i>
+                                                <span>Certified Developer</span>
+                                            </div>
+                                        </div>
+                                        <div class="bg-blue-50 p-4 rounded-lg">
+                                            <p class="text-sm text-blue-800">
+                                                Expertise in rapid application development using Mendix low-code platform for enterprise solutions.
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <!-- Checkmarx Certification -->
+                                    <div class="certification-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300 animate__animated animate__fadeInRight">
+                                        <div class="flex items-center mb-6">
+                                            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mr-4">
+                                                <i class="fas fa-shield-alt text-2xl text-green-600"></i>
+                                            </div>
+                                            <div>
+                                                <h3 class="text-xl font-semibold text-gray-900">Secure Code Training</h3>
+                                                <p class="text-gray-600">Java Security Best Practices</p>
+                                            </div>
+                                        </div>
+                                        <div class="space-y-3 text-gray-600 mb-6">
+                                            <div class="flex items-center">
+                                                <i class="fas fa-building mr-3 text-green-600"></i>
+                                                <span>Checkmarx</span>
+                                            </div>
+                                            <div class="flex items-center">
+                                                <i class="fas fa-code mr-3 text-green-600"></i>
+                                                <span>Java Specialization</span>
+                                            </div>
+                                        </div>
+                                        <div class="bg-green-50 p-4 rounded-lg">
+                                            <p class="text-sm text-green-800">
+                                                Advanced training in secure coding practices and vulnerability prevention in Java applications.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Certification Benefits -->
+                                <div class="mt-12 bg-gradient-to-r from-primary to-secondary p-8 rounded-2xl text-white animate__animated animate__fadeInUp">
+                                    <h3 class="text-2xl font-semibold mb-6 text-center">Certification Benefits</h3>
+                                    <div class="grid md:grid-cols-3 gap-6">
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fas fa-rocket text-2xl"></i>
+                                            </div>
+                                            <h4 class="font-semibold mb-2">Rapid Development</h4>
+                                            <p class="text-blue-200 text-sm">Accelerated application development capabilities</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fas fa-lock text-2xl"></i>
+                                            </div>
+                                            <h4 class="font-semibold mb-2">Security Focus</h4>
+                                            <p class="text-blue-200 text-sm">Enhanced security awareness and implementation</p>
+                                        </div>
+                                        <div class="text-center">
+                                            <div class="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
+                                                <i class="fas fa-star text-2xl"></i>
+                                            </div>
+                                            <h4 class="font-semibold mb-2">Industry Recognition</h4>
+                                            <p class="text-blue-200 text-sm">Validated expertise from industry leaders</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+
+        // Contact Section Component
+        class ContactSection extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <section id="contact" class="py-20 bg-white">
+                        <div class="container mx-auto px-4">
+                            <div class="text-center mb-16 animate__animated animate__fadeInUp">
+                                <h2 class="text-4xl font-bold text-gray-900 mb-4">Get In Touch</h2>
+                                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                                <p class="text-gray-600 max-w-2xl mx-auto">
+                                    I'm always open to discussing new opportunities, interesting projects, or just having a chat about technology
+                                </p>
+                            </div>
+
+                            <div class="max-w-4xl mx-auto">
+                                <div class="grid md:grid-cols-2 gap-12">
+                                    <!-- Contact Information -->
+                                    <div class="animate__animated animate__fadeInLeft">
+                                        <h3 class="text-2xl font-semibold text-gray-900 mb-8">Contact Information</h3>
+                                        
+                                        <div class="space-y-6">
+                                            <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
+                                                    <i class="fas fa-envelope text-white"></i>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-900">Email</h4>
+                                                    <a href="mailto:ajithks797@gmail.com" class="text-primary hover:text-secondary transition-colors">ajithks797@gmail.com</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
+                                                    <i class="fas fa-phone text-white"></i>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-900">Phone</h4>
+                                                    <a href="tel:+916238919160" class="text-primary hover:text-secondary transition-colors">+91 6238919160</a>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
+                                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-900">Location</h4>
+                                                    <p class="text-gray-600">Cherthala, Kerala, India</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex items-center p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors duration-300">
+                                                <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
+                                                    <i class="fab fa-linkedin text-white"></i>
+                                                </div>
+                                                <div>
+                                                    <h4 class="font-semibold text-gray-900">LinkedIn</h4>
+                                                    <a href="https://linkedin.com/in/ajith-k-sabu" target="_blank" class="text-primary hover:text-secondary transition-colors">linkedin.com/in/ajith-k-sabu</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Call to Action -->
+                                    <div class="animate__animated animate__fadeInRight">
+                                        <div class="bg-gradient-to-br from-primary to-secondary p-8 rounded-2xl text-white">
+                                            <h3 class="text-2xl font-semibold mb-6">Let's Work Together</h3>
+                                            <p class="mb-8 text-blue-200 leading-relaxed">
+                                                I'm currently open to new opportunities and interesting projects. Whether you're looking for a backend developer, need help with microservices architecture, or want to discuss a potential collaboration, I'd love to hear from you.
+                                            </p>
+                                            
+                                            <div class="space-y-4 mb-8">
+                                                <div class="flex items-center">
+                                                    <i class="fas fa-check-circle text-yellow-400 mr-3"></i>
+                                                    <span>Available for full-time opportunities</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <i class="fas fa-check-circle text-yellow-400 mr-3"></i>
+                                                    <span>Open to consulting projects</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <i class="fas fa-check-circle text-yellow-400 mr-3"></i>
+                                                    <span>Remote work friendly</span>
+                                                </div>
+                                                <div class="flex items-center">
+                                                    <i class="fas fa-check-circle text-yellow-400 mr-3"></i>
+                                                    <span>International experience</span>
+                                                </div>
+                                            </div>
+
+                                            <div class="flex flex-col sm:flex-row gap-4">
+                                                <a href="mailto:ajithks797@gmail.com" class="bg-yellow-400 text-gray-900 px-6 py-3 rounded-lg font-semibold hover:bg-yellow-300 transition-colors duration-300 text-center">
+                                                    <i class="fas fa-envelope mr-2"></i>Send Email
+                                                </a>
+                                                <a href="https://supabasekong-shipstation.badalhibadal.com/storage/v1/object/public/shipstation-websites/temporary-assets/1752833223324-ajith_springboot_resume_1.pdf" target="_blank" class="border-2 border-white text-white px-6 py-3 rounded-lg font-semibold hover:bg-white hover:text-gray-900 transition-colors duration-300 text-center">
+                                                    <i class="fas fa-download mr-2"></i>Download CV
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+        }
+
+        // Footer Component
+        class Footer extends HTMLElement {
+            connectedCallback() {
+                this.innerHTML = `
+                    <footer class="bg-dark text-white py-12">
+                        <div class="container mx-auto px-4">
+                            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                                <div>
+                                    <h3 class="text-2xl font-bold mb-4 code-font">Ajith K Sabu</h3>
+                                    <p class="text-gray-400 mb-4">
+                                        Java Spring Boot Developer passionate about building scalable backend systems and enterprise solutions.
+                                    </p>
+                                    <div class="flex space-x-4">
+                                        <a href="https://linkedin.com/in/ajith-k-sabu" target="_blank" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-secondary transition-colors duration-300">
+                                            <i class="fab fa-linkedin"></i>
+                                        </a>
+                                        <a href="https://github.com/ajithksabu" target="_blank" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-secondary transition-colors duration-300">
+                                            <i class="fab fa-github"></i>
+                                        </a>
+                                        <a href="mailto:ajithks797@gmail.com" class="w-10 h-10 bg-primary rounded-full flex items-center justify-center hover:bg-secondary transition-colors duration-300">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                                    <ul class="space-y-2 text-gray-400">
+                                        <li><a href="#about" class="hover:text-white transition-colors duration-300">About</a></li>
+                                        <li><a href="#skills" class="hover:text-white transition-colors duration-300">Skills</a></li>
+                                        <li><a href="#experience" class="hover:text-white transition-colors duration-300">Experience</a></li>
+                                        <li><a href="#projects" class="hover:text-white transition-colors duration-300">Projects</a></li>
+                                        <li><a href="#contact" class="hover:text-white transition-colors duration-300">Contact</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <div>
+                                    <h4 class="text-lg font-semibold mb-4">Technologies</h4>
+                                    <div class="flex flex-wrap gap-2">
+                                        <span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Java</span>
+                                        <span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Spring Boot</span>
+                                        <span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Microservices</span>
+                                        <span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">REST API</span>
+                                        <span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Docker</span>
+                                        <span class="bg-primary/20 text-primary px-3 py-1 rounded-full text-sm">Azure</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="border-t border-gray-700 pt-8 text-center text-gray-400">
+                                <p>&copy; 2025 Ajith K Sabu. All rights reserved. Built with passion and modern web technologies.</p>
+                            </div>
+                        </div>
+                    </footer>
+                `;
+            }
+        }
+
+        // Register all components
+        customElements.define('header-component', Header);
+        customElements.define('hero-section', HeroSection);
+        customElements.define('about-section', AboutSection);
+        customElements.define('skills-section', SkillsSection);
+        customElements.define('experience-section', ExperienceSection);
+        customElements.define('projects-section', ProjectsSection);
+        customElements.define('education-section', EducationSection);
+        customElements.define('certifications-section', CertificationsSection);
+        customElements.define('contact-section', ContactSection);
+        customElements.define('footer-component', Footer);
+
+        // Initialize animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate__animated', 'animate__fadeInUp');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // Smooth scrolling for navigation links
+        document.addEventListener('click', (e) => {
+            if (e.target.matches('a[href^="#"]')) {
+                e.preventDefault();
+                const targetId = e.target.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
